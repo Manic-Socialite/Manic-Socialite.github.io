@@ -3,48 +3,74 @@
 <head>
   <title>Listen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       background: black;
-      color: white;
+      color: #00ffcc;
       text-align: center;
-      font-family: Arial, sans-serif;
-      margin-top: 20vh;
+      font-family: "Courier New", monospace;
+      margin-top: 25vh;
     }
+
     h1 {
       font-size: 40px;
-      letter-spacing: 4px;
+      letter-spacing: 6px;
     }
+
     button {
-      font-size: 25px;
-      padding: 15px 30px;
-      background: white;
-      color: black;
-      border: none;
+      font-size: 24px;
+      padding: 15px 40px;
+      background: black;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
       cursor: pointer;
-      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #00ffcc;
+      color: black;
+    }
+
+    #player {
+      display: none;
+      margin-top: 30px;
+    }
+
+    audio {
+      width: 80%;
+      filter: contrast(120%) saturate(120%);
     }
   </style>
 </head>
+
 <body>
 
 <h1>PLAY ME</h1>
 
-<audio id="audio">
-  <source src="Bus rant Washington st.m4a" type="audio/mp4">
-</audio>
+<button id="playButton" onclick="startExperience()">ENTER</button>
 
-<button onclick="playAudio()">PLAY</button>
+<div id="player">
+  <audio id="audio" controls>
+    <source src="Bus rant Washington st.m4a" type="audio/mp4">
+  </audio>
+</div>
 
 <script>
-function playAudio() {
+function startExperience() {
   var audio = document.getElementById("audio");
+  var player = document.getElementById("player");
+  var button = document.getElementById("playButton");
+
+  button.style.display = "none";
+  player.style.display = "block";
+
   audio.play();
-  
-  // optional: open SoundCloud after 3 seconds
+
+  // Optional: open SoundCloud in background
   setTimeout(function() {
     window.open("https://soundcloud.com/filthyfranktv123", "_blank");
-  }, 3000);
+  }, 4000);
 }
 </script>
 
