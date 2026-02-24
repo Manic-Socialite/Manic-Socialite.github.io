@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Listen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: black;
+      color: white;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 20vh;
+    }
+    h1 {
+      font-size: 40px;
+      letter-spacing: 4px;
+    }
+    button {
+      font-size: 25px;
+      padding: 15px 30px;
+      background: white;
+      color: black;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>PLAY ME</h1>
+
+<audio id="audio">
+  <source src="Bus rant Washington st.m4a" type="audio/mp4">
+</audio>
+
+<button onclick="playAudio()">PLAY</button>
+
+<script>
+function playAudio() {
+  var audio = document.getElementById("audio");
+  audio.play();
+  
+  // optional: open SoundCloud after 3 seconds
+  setTimeout(function() {
+    window.open("https://soundcloud.com/filthyfranktv123", "_blank");
+  }, 3000);
+}
+</script>
+
+</body>
+</html>
