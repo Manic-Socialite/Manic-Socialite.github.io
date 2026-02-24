@@ -6,40 +6,81 @@
 
   <style>
     body {
-      background: black;
-      color: #00ffcc;
-      text-align: center;
+      background: #1c1c1c;
+      color: #00ff66;
       font-family: "Courier New", monospace;
-      margin-top: 25vh;
+      text-align: center;
+      margin-top: 18vh;
     }
 
     h1 {
-      font-size: 40px;
       letter-spacing: 6px;
+      margin-bottom: 40px;
     }
 
-    button {
-      font-size: 24px;
-      padding: 15px 40px;
-      background: black;
-      color: #00ffcc;
-      border: 2px solid #00ffcc;
+    #enterBtn {
+      padding: 14px 40px;
+      background: #101010;
+      border: 2px solid #00ff66;
+      color: #00ff66;
+      font-size: 18px;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #00ffcc;
-      color: black;
+    #enterBtn:hover {
+      background: #00ff66;
+      color: #101010;
     }
 
-    #player {
+    #transport {
       display: none;
-      margin-top: 30px;
+      width: 360px;
+      margin: auto;
+      padding: 20px;
+      background: #2a2a2a;
+      border: 3px solid #555;
+      box-shadow: inset 0 0 15px #000;
+    }
+
+    .btn {
+      background: #111;
+      color: #00ff66;
+      border: 2px solid #444;
+      padding: 8px 18px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:hover {
+      background: #00ff66;
+      color: #111;
+    }
+
+    #progressContainer {
+      width: 100%;
+      height: 16px;
+      background: #111;
+      border: 2px solid #444;
+      margin-top: 15px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    #progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #00ff66, #008844);
+    }
+
+    #time {
+      margin-top: 10px;
+      font-size: 13px;
+      letter-spacing: 2px;
     }
 
     audio {
-      width: 80%;
-      filter: contrast(120%) saturate(120%);
+      display: none;
     }
   </style>
 </head>
@@ -48,29 +89,66 @@
 
 <h1>PLAY ME</h1>
 
-<button id="playButton" onclick="startExperience()">ENTER</button>
+<button id="enterBtn" onclick="init()">ENTER</button>
 
-<div id="player">
-  <audio id="audio" controls>
-    <source src="Bus rant Washington st.m4a" type="audio/mp4">
-  </audio>
+<div id="transport">
+  <div>
+    <button class="btn" onclick="playAudio()">▶ PLAY</button>
+    <button class="btn" onclick="pauseAudio()">▌▌ PAUSE</button>
+  </div>
+
+  <div id="progressContainer" onclick="seek(event)">
+    <div id="progress"></div>
+  </div>
+
+  <div id="time">00:00 / 00:00</div>
 </div>
 
+<audio id="audio">
+  <source src="Bus rant Washington st.m4a" type="audio/mp4">
+</audio>
+
 <script>
-function startExperience() {
-  var audio = document.getElementById("audio");
-  var player = document.getElementById("player");
-  var button = document.getElementById("playButton");
+var audio = document.getElementById("audio");
+var progress = document.getElementById("progress");
+var timeDisplay = document.getElementById("time");
 
-  button.style.display = "none";
-  player.style.display = "block";
-
+function init() {
+  document.getElementById("enterBtn").style.display = "none";
+  document.getElementById("transport").style.display = "block";
   audio.play();
+}
 
-  // Optional: open SoundCloud in background
-  setTimeout(function() {
-    window.open("https://soundcloud.com/filthyfranktv123", "_blank");
-  }, 4000);
+function playAudio() {
+  audio.play();
+}
+
+function pauseAudio() {
+  audio.pause();
+}
+
+audio.addEventListener("timeupdate", function() {
+  if (!audio.duration) return;
+
+  var percent = (audio.currentTime / audio.duration) * 100;
+  progress.style.width = percent + "%";
+
+  timeDisplay.textContent =
+    formatTime(audio.currentTime) + " / " +
+    formatTime(audio.duration);
+});
+
+function seek(e) {
+  var rect = e.currentTarget.getBoundingClientRect();
+  var percent = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = percent * audio.duration;
+}
+
+function formatTime(seconds) {
+  var mins = Math.floor(seconds / 60);
+  var secs = Math.floor(seconds % 60);
+  if (secs < 10) secs = "0" + secs;
+  return mins + ":" + secs;
 }
 </script>
 
