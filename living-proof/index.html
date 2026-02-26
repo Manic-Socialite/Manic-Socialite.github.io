@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Listen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      background: #1c1c1c;
+      color: #00ff66;
+      font-family: "Courier New", monospace;
+      text-align: center;
+      margin-top: 15vh;
+    }
+
+    h1 {
+      letter-spacing: 6px;
+      margin-bottom: 40px;
+    }
+
+    #enterBtn {
+      padding: 14px 40px;
+      background: #101010;
+      border: 2px solid #00ff66;
+      color: #00ff66;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #enterBtn:hover {
+      background: #00ff66;
+      color: #101010;
+    }
+
+    #transport {
+      display: none;
+      width: 360px;
+      margin: auto;
+      padding: 20px;
+      background: #2a2a2a;
+      border: 3px solid #555;
+      box-shadow: inset 0 0 15px #000;
+    }
+
+    .btn {
+      background: #111;
+      color: #00ff66;
+      border: 2px solid #444;
+      padding: 8px 18px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:hover {
+      background: #00ff66;
+      color: #111;
+    }
+
+    #progressContainer {
+      width: 100%;
+      height: 16px;
+      background: #111;
+      border: 2px solid #444;
+      margin-top: 15px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    #progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #00ff66, #008844);
+    }
+
+    #time {
+      margin-top: 10px;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    .links {
+      margin-top: 60px;
+      font-size: 12px;
+    }
+
+    .links a {
+      color: #00ff66;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>PLAY ME</h1>
+
+<button id="enterBtn" onclick="init()">ENTER</button>
+
+<div id="transport">
+  <div>
+    <button class="btn" onclick="playAudio()">▶ PLAY</button>
+    <button class="btn" onclick="pauseAudio()">▌▌ PAUSE</button>
+  </div>
+
+  <div id="progressContainer" onclick="seek(event)">
+    <div id="progress"></div>
+  </div>
+
+  <div id="time">00:00 / 00:00</div>
+</div>
+
+<div class="links">
+  <a href="https://soundcloud.com/filthyfranktv123" target="_blank">SoundCloud</a>
+  |
+  <a href="https://instagram.com/odp.3005" target="_blank">Instagram</a>
+  |
+  <a href="https://youtube.com/@allgoodtoday1985" target="_blank">YouTube</a>
+</div>
+
+<audio id="audio">
+  <source src="Line Part 8 Big.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+var audio = document.getElementById("audio");
+var progress = document.getElementById("progress");
+var timeDisplay = document.getElementById("time");
+
+function init() {
+  document.getElementById("enterBtn").style.display = "none";
+  document.getElementById("transport").style.display = "block";
+  audio.play();
+}
+
+function playAudio() {
+  audio.play();
+}
+
+function pauseAudio() {
+  audio.pause();
+}
+
+audio.addEventListener("timeupdate", function() {
+  if (!audio.duration) return;
+
+  var percent = (audio.currentTime / audio.duration) * 100;
+  progress.style.width = percent + "%";
+
+  timeDisplay.textContent =
+    formatTime(audio.currentTime) + " / " +
+    formatTime(audio.duration);
+});
+
+function seek(e) {
+  var rect = e.currentTarget.getBoundingClientRect();
+  var percent = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = percent * audio.duration;
+}
+
+function formatTime(seconds) {
+  var mins = Math.floor(seconds / 60);
+  var secs = Math.floor(seconds % 60);
+  if (secs < 10) secs = "0" + secs;
+  return mins + ":" + secs;
+}
+</script>
+
+</body>
+</html>
