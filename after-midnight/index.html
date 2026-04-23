@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Watch</title>
+  <title>PLAY</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       background: #1c1c1c;
-      color: #00ff66;
+      color: #ff66cc;
       font-family: "Courier New", monospace;
       text-align: center;
-      margin-top: 8vh;
+      margin-top: 10vh;
     }
 
     h1 {
       letter-spacing: 6px;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      padding: 14px 40px;
+      background: #101010;
+      border: 2px solid #ff66cc;
+      color: #ff66cc;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 10px;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #ff66cc;
+      color: #101010;
     }
 
     #videoContainer {
       display: none;
       width: 90%;
       max-width: 800px;
-      margin: auto;
+      margin: 30px auto;
     }
 
     video {
@@ -38,7 +54,7 @@
     }
 
     .links a {
-      color: #00ff66;
+      color: #ff66cc;
       text-decoration: none;
       margin: 0 10px;
     }
@@ -53,10 +69,12 @@
 
 <h1>PLAY ME</h1>
 
+<button class="btn" onclick="playVideo()">VIDEO</button>
+<button class="btn" onclick="openWeird()">RANDOM WEB</button>
+
 <div id="videoContainer">
-  <video id="video" autoplay controls>
+  <video id="video" controls autoplay muted>
     <source src="yourvideo.mp4" type="video/mp4">
-    Your browser does not support video.
   </video>
 </div>
 
@@ -69,16 +87,15 @@
 </div>
 
 <script>
-window.onload = function () {
+function playVideo() {
   document.getElementById("videoContainer").style.display = "block";
-
   const video = document.getElementById("video");
+  video.play();
+}
 
-  video.play().catch(() => {
-    video.muted = true;
-    video.play();
-  });
-};
+function openWeird() {
+  window.location.href = "https://theuselessweb.com/";
+}
 </script>
 
 </body>
