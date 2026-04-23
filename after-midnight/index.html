@@ -74,7 +74,14 @@
 
 <script>
 function playVideo() {
-  window.location.href = "https://www.youtube.com/watch?v=Yj36pNuib_8";
+  const appLink = "youtube://www.youtube.com/watch?v=Yj36pNuib_8";
+  const webLink = "https://www.youtube.com/watch?v=Yj36pNuib_8";
+
+  window.location.href = appLink;
+
+  setTimeout(function () {
+    window.location.href = webLink;
+  }, 1200);
 }
 
 function openWeird() {
